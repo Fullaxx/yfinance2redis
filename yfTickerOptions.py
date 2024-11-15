@@ -11,4 +11,4 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 	res = yf.Ticker(args.symbol)
 
-	pprint(res.analyst_price_targets)
+	pprint(res.options)
