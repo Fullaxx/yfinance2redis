@@ -23,10 +23,11 @@ def bailmsg(*args, **kwargs):
 	eprint(*args, **kwargs)
 	sys.exit(1)
 
-def push_info_to_redis(r, symbol, json_str):
+def push_info_to_redis(r, symbol, info):
+#	pprint(info)
+	info_str = json.dumps(info)
 	key = f'YFINANCE:INFO:{symbol}'
-	cmd = f'SET {key}'
-	result = r.set(cmd, json_str)
+	result = r.set(key, info_str)
 	print(f'SET {key} {result}')
 
 def delete_if_exists(stock_d, key):
@@ -56,8 +57,4 @@ if __name__ == '__main__':
 
 	delete_if_exists(res.info, 'companyOfficers')
 	delete_if_exists(res.info, 'longBusinessSummary')
-#	pprint(type(res))
-#	pprint(res.info)
-	json_str = json.dumps(res.info)
-#	print(json_str)
-	push_info_to_redis(r, args.symbol, json_str)
+	push_info_to_redis(r, args.symbol, res.info)
