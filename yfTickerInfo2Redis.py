@@ -25,10 +25,14 @@ def bailmsg(*args, **kwargs):
 
 def push_info_to_redis(r, symbol, info):
 #	pprint(info)
+	cp = info['currentPrice']
 	info_str = json.dumps(info)
 	key = f'YFINANCE:INFO:{symbol}'
 	result = r.set(key, info_str)
-	print(f'SET {key} {result}')
+	if result:
+		print(f'SET {key} ${cp}')
+	else:
+		print(f'SET {key} FAIED!')
 
 def delete_if_exists(stock_d, key):
 	if key in stock_d:
