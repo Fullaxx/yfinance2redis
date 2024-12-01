@@ -1,0 +1,9 @@
+https://stackoverflow.com/questions/43398957/how-to-specify-the-source-ip-address-with-curl
+
+
+curl --interface zz.zz.zz.zz http://example.com/
+
+Also this is useful to send request from all available ipv6 addresses:
+ip -6 addr show dev eth0 | grep 2604 | awk '{print $(NF-2)}' | rev | cut -c 4- | rev | xargs -I % curl -6 'https://api64.ipify.org?format=json' --interface %
+Yagiz Degirmenci
+CommentedFeb 25, 2021 at 15:53
