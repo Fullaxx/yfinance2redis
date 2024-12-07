@@ -13,7 +13,8 @@ if __name__ == '__main__':
 	parser = ArgumentParser()
 	parser.add_argument('--symbol', '-s', type=str, required=True)
 	args = parser.parse_args()
-	res = yf.Ticker(args.symbol)
+	yf_symbol = args.symbol.replace('/','-')
+	res = yf.Ticker(yf_symbol)
 
 	delete_if_exists(res.info, 'companyOfficers')
 	delete_if_exists(res.info, 'longBusinessSummary')
